@@ -1,8 +1,10 @@
 package main
 
 import (
+	"crypto/rand"
 	"fmt"
 	"log"
+	"math/big"
 	"net/http"
 	"strconv"
 	"strings"
@@ -12,9 +14,33 @@ import (
 	"github.com/sethvargo/go-password/password"
 )
 
+const (
+	Vowels = "aeioAEIO"
+	Leet   = "43104310"
+)
+
+func randomReplaceVowels(s string) (string, error) {
+	for pos, runeValue := range s {
+		if index := strings.IndexRune(Vowels, runeValue); index > -1 {
+			randInt, err := rand.Int(rand.Reader, big.NewInt(2))
+			if err != nil {
+				return "", nil
+			}
+			if randInt.Cmp(big.NewInt(1)) == 0 {
+				s = s[0:pos] + string(Leet[index]) + s[pos+1:len(s)]
+			}
+		}
+	}
+	return s, nil
+}
+
 func queryInt(r *http.Request, key string) (int, error) {
 	value := r.URL.Query().Get(key)
-	return strconv.Atoi(value)
+	if value == "" {
+		return 0, nil
+	} else {
+		return strconv.Atoi(value)
+	}
 }
 
 func main() {
@@ -33,6 +59,7 @@ func main() {
 		}
 		numDigits, err := queryInt(r, "numDigits")
 		if err != nil {
+			fmt.Println(err.Error())
 			invalidParams = append(invalidParams, "numDigits")
 		}
 		numSymbols, err := queryInt(r, "numSymbols")
@@ -47,6 +74,11 @@ func main() {
 		res, err := password.Generate(length, numDigits, numSymbols, false, true)
 		if err != nil {
 			http.Error(w, err.Error(), 422)
+			return
+		}
+		res, err = randomReplaceVowels(res)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
 			return
 		}
 		w.Write([]byte(res))
