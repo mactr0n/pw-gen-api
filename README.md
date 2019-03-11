@@ -12,7 +12,7 @@ A very simple password generation API.
   * `length` of password candidates (*`int`*, *optional*, *default=8*)
   * `numDigits` the number of digits (*`int`*, *optional*, *default=0*)
   * `numSymbols` the number of symbols (*`int`*, *optional*, *default=0*)
-  * `replaceVowels` replace (german) vowels of password candidates randomly (*`bool`*, *optional*, , *default=false*)
+  * `replaceVowels` replace (german) vowels of password candidates randomly (*`bool`*, *optional*, *default=false*)
 
 ### Success Responses
 
@@ -22,9 +22,10 @@ A very simple password generation API.
 ```
 [
     "candidates": [
-        "password1",
-        "password2",
+        "password_candidate_1",
+        "password_candidate_1",
         ...
+        "password_candidate_n"
     ]
 ]
 ```
