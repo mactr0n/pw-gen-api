@@ -12,7 +12,7 @@ A very simple password generation API.
 **Code** : `200 OK`
 
 **Content** :
-```json
+```
 [
     "candidates": [
         "password1",
