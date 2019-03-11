@@ -35,3 +35,5 @@ A very simple password generation API.
 $ chmod +x .build.bash
 $ ./build.bash [VERSION]
 ``` 
+## Use
+Latest binaries can be found on the [the releases page](https://github.com/mactr0n/pw-gen-api/releases/latest).
