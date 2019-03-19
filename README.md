@@ -1,6 +1,14 @@
 # pw-gen-api
 A very simple password generation API.
 
+## Run
+1. Download latest binary from [the releases page](https://github.com/mactr0n/pw-gen-api/releases/latest) or build binary:
+    ```
+    $ chmod +x .build.bash
+    $ ./build.bash [VERSION]
+    ```
+2. Executing the binary will start a REST API server on port `3334`.
+
 ## API
 
 **URL** : `/passwords`
@@ -30,10 +38,7 @@ A very simple password generation API.
 ]
 ```
 
-## Build
+## Curl Example:
 ```
-$ chmod +x .build.bash
-$ ./build.bash [VERSION]
-``` 
-## Use
-Latest binaries can be found on the [the releases page](https://github.com/mactr0n/pw-gen-api/releases/latest).
+$ curl -X GET "http://localhost:3334/passwords?length=32&numDigits=4&numSymbols=4&replaceVowels=true"
+```
